@@ -3,7 +3,7 @@
     "version": "1.0",
     "name": "GPTBottomCopyButton",
     "description": "Added a Code Copy button below the code in ChatGPT.",
-    "permissions": ["activeTab", "scripting","tabs","storage"],
+    "permissions": ["tabs"],
     "icons": {
       "16": "logo16.png",
       "48": "logo48.png",
