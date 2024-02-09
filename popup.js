@@ -1,4 +1,3 @@
-
 // (popup<->background)DOMContentLoaded 이벤트가 발생하면 백그라운드 페이지에서 변수를 가져오는 함수 호출
     chrome.runtime.sendMessage("getBackgroundVariable", function(response) {
         if (response && response.beforeOption) {

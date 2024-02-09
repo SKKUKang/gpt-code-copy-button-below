@@ -1,6 +1,5 @@
 var contentknow;
 let ismodified = false;
-
 //popup->content  명령받고 실행
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     contentknow = request.type;
@@ -34,9 +33,15 @@ function removeHTML() {
 }
 
 
+
+
 function modifyHTML() {
+    if(ismodified == true){
+        console.log("이미 실행중입니다.");
+        return;
+    }else{
     ismodified = true;
-    console.log("modifyHTML");
+    console.log("StartingmodifyHTML");
     const parentDivs = document.querySelectorAll('.overflow-y-auto code:not(.junedone)');
     if (parentDivs.length > 0) {
         parentDivs.forEach(parentDiv => {
@@ -53,12 +58,9 @@ Copy code
                     </button>
             `;
             codeWrapper.innerHTML = copyButtonHtml;
-
-            // 생성된 HTML 코드를 부모 div 요소의 하단에 추가합니다.
             parentDiv.parentNode.parentNode.appendChild(codeWrapper);
-            ismodified = false;
-
-            // 복사 버튼을 클릭하면 코드를 복사하도록 합니다.
+            
+            console.log("실제로 코드 변경함");
             const copyButton = codeWrapper.querySelector('#copyButton');
             if (copyButton) {
                 copyButton.addEventListener('click', function () {
@@ -80,32 +82,45 @@ Copy code
                             }
                             // 버튼 텍스트와 아이콘 원래대로 변경
                             copyButton.innerHTML = copyButtonHtml;
-                        }, 2000);
-                        
+                        }, 2000);  
                     } 
-                    
                 });
             } else {
-                ismodified = false;
-                //console.log('Copy button not found!');
             }
         });
-
     } else {
-        ismodified = false;
-
-        //console.log('code parent div not found!');
     }
+    const juneButtons = document.querySelectorAll('.junebutton');
+// junebutton 클래스를 가진 요소들을 순회하면서 검사
+    juneButtons.forEach((button, index, buttons) => {   
+    // 현재 요소의 다음 형제 요소가 존재하고, 그 다음 형제 요소가 junebutton 클래스를 가지고 있는지 확인
+    if (button.nextElementSibling && button.nextElementSibling.classList.contains('junebutton')) {
+        // 현재 요소의 다음 형제 요소가 junebutton 클래스를 가지고 있다면 현재 요소 삭제
+        button.remove();
+        console.log("중복된 버튼 삭제됨 ;")
+    }
+    });
+
+    console.log("EndmodifyHTML");
+    ismodified = false;
+    return;
+}
 }
 
+
+const parenttarget = document.querySelector('[role="presentation"]');
+const target = parenttarget.querySelector('.flex-1.overflow-hidden');
 
 
 const observer = new MutationObserver((mutationsList, observer) => {
     setTimeout(() => {
-        if(contentknow === 'activate' && !ismodified){
+        if(contentknow === 'activate'){
             modifyHTML();
         }
     }, 1);
+    
 });
 
-observer.observe(document.body, { childList: true, subtree: true });
+
+observer.observe(target, { childList: true, subtree: true });
+

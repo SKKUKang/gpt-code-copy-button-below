@@ -16,3 +16,4 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.error("requestype is not matched!",request.type);
   }
 });
+
