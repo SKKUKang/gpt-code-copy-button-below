@@ -1,18 +1,32 @@
 
-// background.js로부터 메시지를 받는 함수
-/*chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    // 받은 변수 값에 따라 라디오 버튼을 체크
-    if (message.checkedRadio === 'activate') {
-      document.getElementById('activateRadio').checked = true;
-    } else if (message.checkedRadio === 'deactivate') {
-      document.getElementById('deactivateRadio').checked = true;
+// (popup<->background)DOMContentLoaded 이벤트가 발생하면 백그라운드 페이지에서 변수를 가져오는 함수 호출
+    chrome.runtime.sendMessage("getBackgroundVariable", function(response) {
+        if (response && response.beforeOption) {
+            console.log("Background variable:", response.beforeOption);
+            if (response.beforeOption === "activate") {
+                document.getElementById("activateRadio").checked = true;
+                console.log("activateRadio checked!");
+            } else if (response.beforeOption === "deactivate") {
+                document.getElementById("deactivateRadio").checked = true;
+                console.log("deactivateRadio checked!");
+            } else {
+                console.log("activationOption is not matched!");
+            }
+        } else {
+            console.log("Failed to get background variable.");
+        }
     }
-  });
-*/
 
-document.getElementById("sub"), addEventListener('click', () => {
+    );
+
     // 버튼 클릭 이벤트를 처리하는 함수
+document.getElementById("sub"), addEventListener('click', () => {
     var activationOption = document.querySelector('input[name="activationOption"]:checked').value;
+    // popup->background 변수변경 알림
+    chrome.runtime.sendMessage(activationOption
+    ,(response) => {
+    })
+    //popup->content에 실행명령
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const tab = tabs[0];
         if (activationOption === "activate") {
@@ -24,15 +38,6 @@ document.getElementById("sub"), addEventListener('click', () => {
                 },
             },
                 (response) => {
-                    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-                        if (request.type === 'activatecheck') {
-                            console.log('정상적으로 activate로 변경되었다고 content.js에서 응답이 왔습니다');
-                        }
-
-                        sendResponse({});
-                        return true;
-                    });
-
                 }
             );
         }
@@ -45,18 +50,16 @@ document.getElementById("sub"), addEventListener('click', () => {
                 },
             },
                 (response) => {
-                    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-                        if (request.type === 'deactivatecheck') {
-                            console.log('정상적으로 deactivate로 변경되었다고 content.js에서 응답이 왔습니다');
-                        }
-
-                        sendResponse({});
-                        return true;
-                    });
-
                 }
             );                
         }
     });
 
 });
+
+
+
+
+
+
+
