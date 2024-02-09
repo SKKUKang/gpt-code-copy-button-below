@@ -1,8 +1,8 @@
-var contentknow;
+
 let ismodified = false;
 //popup->content  명령받고 실행
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    contentknow = request.type;
+    console.log(request.type);
     if (request.type === 'activate' && !ismodified) {
         setTimeout(() => {
             modifyHTML();
@@ -18,20 +18,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
 });
 
-const parenttarget = document.querySelector('[role="presentation"]');
-const target = parenttarget.querySelector('.flex-1.overflow-hidden');
-
-
-const observer = new MutationObserver((mutationsList, observer) => {
-    setTimeout(() => {
-        if(contentknow === 'activate'){
-            modifyHTML();
-        }
-    }, 1);
-    
-});
-
-
 
 
 function removeHTML() {
@@ -44,6 +30,7 @@ function removeHTML() {
     parentDivs.forEach(parentDiv => {
         parentDiv.classList.remove('junedone');
     });
+    observer.disconnect();
 }
 
 
@@ -114,12 +101,22 @@ Copy code
     }
     });
     ismodified = false;
+    const parenttarget = document.querySelector('[role="presentation"]');
+    const target = parenttarget.querySelector('.flex-1.overflow-hidden');
     observer.observe(target, { childList: true, subtree: true });
-
     return;
 }
 }
 
+
+
+
+const observer = new MutationObserver((mutationsList, observer) => {
+    setTimeout(() => {
+        modifyHTML();
+    }, 1);
+    
+});
 
 
 

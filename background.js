@@ -2,10 +2,7 @@ var beforeOption = 'deactivate';
 
 // (popup<->background)메시지를 받아서 처리하는 함수
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message === "getBackgroundVariable") {
-      sendResponse({beforeOption:beforeOption});
-  }
-  else if(message === 'activate'){
+  if(message === 'activate'){
     beforeOption = 'activate';
 
   }
