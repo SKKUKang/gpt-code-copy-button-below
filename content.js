@@ -97,7 +97,7 @@ Copy code
     if (button.nextElementSibling && button.nextElementSibling.classList.contains('junebutton')) {
         // 현재 요소의 다음 형제 요소가 junebutton 클래스를 가지고 있다면 현재 요소 삭제
         button.remove();
-        console.log("중복된 버튼 삭제됨 ;")
+        console.log("중복버튼 삭제")
     }
     });
     ismodified = false;

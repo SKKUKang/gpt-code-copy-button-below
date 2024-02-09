@@ -6,25 +6,63 @@
     <title>Extension Activation</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333;
         }
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             margin-top: 20px;
         }
         .button-container button {
-            margin: 0 10px;
+            flex: 1;
+            height: 50px;/* 높이 설정 */
+            width: 100px;   
+            padding: 5px; /* 버튼 내부 패딩 제거 */
+            margin: 0 5px; /* 좌우 여백 설정 */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #activateButton {
+            background-color: #007bff;
+            color: #fff;
+        }
+        #activateButton:hover {
+            background-color: #0056b3;
+        }
+        #deactivateButton {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        #deactivateButton:hover {
+            background-color: #bd2130;
         }
     </style>
 </head>
 <body>
-    <h2>Extension Activation</h2>
-    <p>Activate or deactivate the extension:</p>
-    <div class="button-container">
-        <button id="activateButton">Activate</button>
-        <button id="deactivateButton">Deactivate</button>
+    <div class="container">
+        <h2>Added a Code Copy button below the code in ChatGPT</h2>
+        <p>Activate or deactivate the extension:</p>
+        <div class="button-container">
+            <button id="activateButton">Activate</button>
+            <button id="deactivateButton">Deactivate</button>
+        </div>
     </div>
 
     <script src="popup.js"></script>
