@@ -10,12 +10,10 @@
     );
 
     // 버튼 클릭 이벤트를 처리하는 함수
-document.getElementById("sub"), addEventListener('click', () => {
+document.getElementById("sub"),addEventListener('click', () => {
     var activationOption = document.querySelector('input[name="activationOption"]:checked').value;
     // popup->background 변수변경 알림
-    chrome.runtime.sendMessage(activationOption
-    ,(response) => {
-    })
+    chrome.runtime.sendMessage(activationOption)
     //popup->content에 실행명령
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const tab = tabs[0];

@@ -18,6 +18,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
 });
 
+const parenttarget = document.querySelector('[role="presentation"]');
+const target = parenttarget.querySelector('.flex-1.overflow-hidden');
+
+
+const observer = new MutationObserver((mutationsList, observer) => {
+    setTimeout(() => {
+        if(contentknow === 'activate'){
+            modifyHTML();
+        }
+    }, 1);
+    
+});
+
+
 
 
 function removeHTML() {
@@ -41,7 +55,6 @@ function modifyHTML() {
         return;
     }else{
     ismodified = true;
-    console.log("StartingmodifyHTML");
     const parentDivs = document.querySelectorAll('.overflow-y-auto code:not(.junedone)');
     if (parentDivs.length > 0) {
         parentDivs.forEach(parentDiv => {
@@ -100,27 +113,14 @@ Copy code
         console.log("중복된 버튼 삭제됨 ;")
     }
     });
-
-    console.log("EndmodifyHTML");
     ismodified = false;
+    observer.observe(target, { childList: true, subtree: true });
+
     return;
 }
 }
 
 
-const parenttarget = document.querySelector('[role="presentation"]');
-const target = parenttarget.querySelector('.flex-1.overflow-hidden');
 
 
-const observer = new MutationObserver((mutationsList, observer) => {
-    setTimeout(() => {
-        if(contentknow === 'activate'){
-            modifyHTML();
-        }
-    }, 1);
-    
-});
-
-
-observer.observe(target, { childList: true, subtree: true });
 
