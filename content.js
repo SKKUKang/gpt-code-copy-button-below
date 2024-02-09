@@ -42,7 +42,7 @@ function modifyHTML() {
         parentDivs.forEach(parentDiv => {
             parentDiv.classList.add('junedone');
             const codeWrapper = document.createElement('div');
-            codeWrapper.classList.add('flex', 'items-center', 'px-4', 'text-xs', 'font-sans', 'justify-end','junebutton');
+            codeWrapper.classList.add('flex', 'items-center', 'px-4', 'text-xs', 'font-sans', 'justify-end','text-token-text-secondary','junebutton');
             codeWrapper.style.height = '32px';
             const copyButtonHtml = `
                     <button class="flex gap-1 items-center" id="copyButton">
@@ -55,7 +55,7 @@ Copy code
             codeWrapper.innerHTML = copyButtonHtml;
 
             // 생성된 HTML 코드를 부모 div 요소의 하단에 추가합니다.
-            parentDiv.parentNode.appendChild(codeWrapper);
+            parentDiv.parentNode.parentNode.appendChild(codeWrapper);
             ismodified = false;
 
             // 복사 버튼을 클릭하면 코드를 복사하도록 합니다.

@@ -2,21 +2,12 @@
 // (popup<->background)DOMContentLoaded 이벤트가 발생하면 백그라운드 페이지에서 변수를 가져오는 함수 호출
     chrome.runtime.sendMessage("getBackgroundVariable", function(response) {
         if (response && response.beforeOption) {
-            console.log("Background variable:", response.beforeOption);
             if (response.beforeOption === "activate") {
                 document.getElementById("activateRadio").checked = true;
-                console.log("activateRadio checked!");
             } else if (response.beforeOption === "deactivate") {
                 document.getElementById("deactivateRadio").checked = true;
-                console.log("deactivateRadio checked!");
-            } else {
-                console.log("activationOption is not matched!");
-            }
-        } else {
-            console.log("Failed to get background variable.");
-        }
-    }
-
+            } 
+    }}
     );
 
     // 버튼 클릭 이벤트를 처리하는 함수
